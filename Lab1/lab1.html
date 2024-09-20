@@ -24,7 +24,7 @@
 
   <body>
 
-    <canvas id="canvasOne" width="800" height="600"></canvas>
+    <canvas id="canvasOne" width="600" height="340"></canvas>
 
     <script type="text/javascript">
 		// Gets a handle to the element with id canvasOne.
@@ -37,10 +37,21 @@
 		ctx.fillStyle = "red";
 		// Create a filled rectangle 
         
-        ctx.fillRect(0,0, 800,600);
+        //adding name
+        ctx.fillRect(0,0, 600,340);
         ctx.fillStyle = "white";
         ctx.font = "50px Arial";
 		ctx.fillText("Fionn McGoldrick",10,80);
+
+
+        
+
+        //adding another triangle
+        ctx.fillStyle = "rgb(255, 0, 0)";
+        ctx.fillRect(250,120,300,200);
+
+
+
 	  
 		
     </script>
