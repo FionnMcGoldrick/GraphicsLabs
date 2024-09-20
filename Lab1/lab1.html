@@ -21,7 +21,7 @@
 
   <body>
 
-    <canvas id="canvasOne" width="800" height="700"></canvas>
+    <canvas id="canvasOne" width="1000" height="1400"></canvas>
 
     <script type="text/javascript">
 		// Gets a handle to the element with id canvasOne.
@@ -48,7 +48,22 @@
         ctx.fillRect(200,120,400,230);
 
         //adding two circles
+        //first circle
+   
+        ctx.beginPath();
+        ctx.arc(100, 450, 40, 0, 2 * Math.PI);
+        ctx.fillStyle = "red";
+        ctx.fill();
+        ctx.stroke();
 
+        //second circle
+        ctx.beginPath();
+        ctx.arc(200, 450, 40, 0, 2 * Math.PI);
+        ctx.fillStyle = "yellow";
+        ctx.fill();
+        ctx.stroke();
+
+        
 
 
 	  
