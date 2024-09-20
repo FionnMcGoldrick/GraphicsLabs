@@ -24,7 +24,7 @@
 
   <body>
 
-    <canvas id="canvasOne"></canvas>
+    <canvas id="canvasOne" width="800" height="600"></canvas>
 
     <script type="text/javascript">
 		// Gets a handle to the element with id canvasOne.
@@ -36,8 +36,10 @@
 		// Set the fill colour to bright red.
 		ctx.fillStyle = "red";
 		// Create a filled rectangle 
+        
+        ctx.fillRect(0,0, 800,600);
+        ctx.fillStyle = "white";
         ctx.font = "50px Arial";
-        ctx.fillRect(0,0, 450,250);
 		ctx.fillText("Fionn McGoldrick",10,80);
 	  
 		
