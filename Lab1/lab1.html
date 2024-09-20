@@ -10,8 +10,12 @@
 
     <style type="text/css">
         
+        body{
+            background-color: rgb(211, 159, 159);
+        }
+
         canvas{
-            border: 5px solid green;
+            border: 5px solid white;
         }
 
     </style>
@@ -30,10 +34,11 @@
         const ctx = canvas.getContext("2d");
 		
 		// Set the fill colour to bright red.
-		
+		ctx.fillStyle = "red";
 		// Create a filled rectangle 
+        ctx.font = "50px Arial";
         ctx.fillRect(0,0, 450,250);
-		
+		ctx.fillText("Fionn McGoldrick",10,80);
 	  
 		
     </script>
