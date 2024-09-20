@@ -66,7 +66,16 @@
         //semi circle
         ctx.beginPath();
         ctx.arc(300, 450, 40, 0, 1 * Math.PI);
-        ctx.fillStyle = "yellow";
+        ctx.fillStyle = "purple";
+        ctx.fill();
+        ctx.stroke();
+
+        //3 quarters of a circle 
+        ctx.beginPath();
+        ctx.arc(400, 450, 40, 0, 1.5 * Math.PI);
+        ctx.lineTo(400,450);
+        ctx.lineTo(440,450);
+        ctx.fillStyle = "green";
         ctx.fill();
         ctx.stroke();
 
