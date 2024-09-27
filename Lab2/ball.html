@@ -15,7 +15,7 @@
       canvas{
             border: 5px solid black;
             width: 750px;
-            height: 300px;
+            height: 500px;
         }
     </style>
 
@@ -35,6 +35,8 @@
       
       // The vertical location of the ball.
       var y = 10;
+      //var for speed and y direction of ball
+      var y_speed = 1;
       
       // A function to repeat every time the animation loops.
       function repeatme() {
@@ -43,16 +45,21 @@
 
         // Draw the ball (stroked, not filled).
         ctx.beginPath();
-        ctx.arc(50, y, 3, 0, 2 * Math.PI);
+        ctx.arc(10, y, 2, 0, 2 * Math.PI);
         ctx.stroke();
         
         // Update the y location.
-        y += 1;
+        y += y_speed;
 
           //if ball hits bottom of canvas
-          if(y >= 300){
-            console.log("Hello");
+          if(y >= 145){
+            y_speed = -1;
         }
+        if(y < 5)
+        {
+          y_speed = 1;
+        }
+       
         
         window.requestAnimationFrame(repeatme);
 
