@@ -26,44 +26,74 @@
     <canvas id="canvas-for-ball" height="500px" width="750px"></canvas>
 
     <script type="text/javascript">
+
+      //CLASS for ball
+      class Ball{
+
+        constructor(x, y, y_speed, radius){
+       
+          this.radius = radius;
+          this.x = x;
+          this.y = y;
+          this.y_speed = y_speed;
+        }
+
+        //draw ball method
+        drawball(){
+          ctx.clearRect(0, 0, 500, 500);
+
+          // Draw the ball (stroked, not filled).
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+          ctx.stroke();
+        }
+
+        ballMove(){
+  
+        //ball velocity
+        this.y += this.y_speed;
+
+
+        //if ball hits bottom of canvas
+        if(this.y >= 485){
+          this.y_speed = -1 * this.y_speed;
+        }
+        if(this.y < 15){
+        this.y_speed = -1 * this.y_speed;
+        }
+        }
+
+      }
+
+
       // Gets a handle to the element with id canvasOne.
       var canvas = document.getElementById("canvas-for-ball");
       // Get a 2D context for the canvas.
       var ctx = canvas.getContext("2d");
       
-      // The vertical location of the ball.
-      var y = 10;
+        // The vertical location of the ball.
+        //var y = 10;
+
+      //Make ball into class
+      const ball1 = new Ball(30,15,5, 10);
+
+      
+    
+
       //var for speed and y direction of ball
-      var y_speed = 5;
+      //var y_speed = 5;
       
       // A function to repeat every time the animation loops.
       function repeatme() {
 
-        ctx.clearRect(0, 0, 500, 500);
+        ball1.drawball();
+   
+        ball1.ballMove();
 
-        // Draw the ball (stroked, not filled).
-        ctx.beginPath();
-        ctx.arc(100, y, 10, 0, 2 * Math.PI);
-        ctx.stroke();
-        
-        // Update the y location.
-        y += y_speed;
 
-          //if ball hits bottom of canvas
-          if(y >= 485){
-            y_speed = -1 * y_speed;
-        }
-        if(y < 15)
-        {
-          y_speed = -1 * y_speed;
-        }
-       
-        
+
         window.requestAnimationFrame(repeatme);
-
-      
-
-        
+           
       }
       
       // Get the animation going.
