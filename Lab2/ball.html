@@ -11,6 +11,12 @@
       body {
           background-color: white;
       }
+
+      canvas{
+            border: 5px solid black;
+            width: 750px;
+            height: 300px;
+        }
     </style>
 
   </head>
@@ -19,7 +25,7 @@
 
     <h1>Fionn McGoldrick</h1>
 
-    <canvas id="canvas-for-ball"></canvas>
+    <canvas id="canvas-for-ball" ></canvas>
 
     <script type="text/javascript">
       // Gets a handle to the element with id canvasOne.
@@ -29,6 +35,7 @@
       
       // The vertical location of the ball.
       var y = 10;
+      
       // A function to repeat every time the animation loops.
       function repeatme() {
 
@@ -41,8 +48,17 @@
         
         // Update the y location.
         y += 1;
+
+          //if ball hits bottom of canvas
+          if(y >= 300){
+            console.log("Hello");
+        }
         
         window.requestAnimationFrame(repeatme);
+
+      
+
+        
       }
       
       // Get the animation going.
