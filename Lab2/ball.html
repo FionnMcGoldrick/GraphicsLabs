@@ -14,8 +14,6 @@
 
       canvas{
             border: 5px solid black;
-            width: 750px;
-            height: 500px;
         }
     </style>
 
@@ -25,7 +23,7 @@
 
     <h1>Fionn McGoldrick</h1>
 
-    <canvas id="canvas-for-ball" ></canvas>
+    <canvas id="canvas-for-ball" height="500px" width="750px"></canvas>
 
     <script type="text/javascript">
       // Gets a handle to the element with id canvasOne.
@@ -36,28 +34,28 @@
       // The vertical location of the ball.
       var y = 10;
       //var for speed and y direction of ball
-      var y_speed = 1;
+      var y_speed = 5;
       
       // A function to repeat every time the animation loops.
       function repeatme() {
 
-        ctx.clearRect(0, 0, 500, 450);
+        ctx.clearRect(0, 0, 500, 500);
 
         // Draw the ball (stroked, not filled).
         ctx.beginPath();
-        ctx.arc(10, y, 2, 0, 2 * Math.PI);
+        ctx.arc(100, y, 10, 0, 2 * Math.PI);
         ctx.stroke();
         
         // Update the y location.
         y += y_speed;
 
           //if ball hits bottom of canvas
-          if(y >= 145){
-            y_speed = -1;
+          if(y >= 485){
+            y_speed = -1 * y_speed;
         }
-        if(y < 5)
+        if(y < 15)
         {
-          y_speed = 1;
+          y_speed = -1 * y_speed;
         }
        
         
