@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,23 +19,23 @@
         var ctx = canvas.getContext("2d");
 
         //paddle class created
-        class Paddle{
+        class Paddle {
 
-            constructor(x, y, width, height, xspeed, yspeed){ //constructor
+            constructor(x, y, width, height, xspeed, yspeed) { //constructor
 
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.xspeed = xspeed;
-            this.yspeed = yspeed;
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.xspeed = xspeed;
+                this.yspeed = yspeed;
 
             }
 
             //draw rectangle functions created
-            drawRec(){
+            drawRec() {
 
-                
+
                 ctx.beginPath();
                 ctx.strokeStyle = "red";
                 ctx.lineWidth = "6";
@@ -45,21 +46,47 @@
             }
 
             //move paddle functions created
-            movePaddle(){
-                
+            movePaddle() {
+
+                $(document.body).on('keydown', function (e) {
+                    console.log(e.which);
+                    switch (e.which) {
+                        // key code for left arrow
+                        case 37:
+                            console.log('left arrow key pressed!');
+                            break;
+
+                        // key code for right arrow
+                        case 39:
+                            console.log('right arrow key pressed!');
+                            break;
+
+                        //key code for up arrow key
+                        case 38:
+                            console.log('up arrow key pressed!');
+                            break;
+                        //key code for down arrow key
+                        case 40:
+                            console.log('down arrow key pressed!');
+                            break;
+
+                    }
+                });
+
             }
-        
+
         }
 
-        
+
         //instance of paddle class created
-    const myPaddle = new Paddle(20,20,150,100,0,0);
+        const myPaddle = new Paddle(20, 20, 150, 100, 0, 0);
 
-    myPaddle.drawRec(); //calling draw method
-       
-    
-</script> <!-- End of script -->
+        myPaddle.drawRec(); //calling draw method
 
-    
+
+    </script> <!-- End of script -->
+
+
 </body>
+
 </html>
