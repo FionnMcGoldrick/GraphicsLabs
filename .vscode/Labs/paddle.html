@@ -9,7 +9,11 @@
     <!-- CSS -->
     <style type="text/css">
         canvas {
-            border: black solid 2px;
+            border: black solid 5px;
+        }
+
+        body {
+            background-color: lightcyan;
         }
     </style>
 
@@ -31,7 +35,7 @@
         // Paddle class
         class Paddle {
             constructor(x, y, width, height) {
-                this.x = 50;
+                this.x = 20;
                 this.y = y;
                 this.width = width;
                 this.height = height;
@@ -50,25 +54,53 @@
             move(e) {
 
                 // Update the paddle's position based on the mouse's X position
-               // this.x = e.clientX - leftPos - this.width / 2; (commented out so paddle stays on y axis.)
-               
+                // this.x = e.clientX - leftPos - this.width / 2; (commented out so paddle stays on y axis.)
+
                 this.y = e.clientY - topPos - this.height / 2; // Center the paddle vertically
                 this.drawPaddle(); // Redraw paddle at new position
 
-                //check edge collision
-                if (this.x == topPos) {
-                    console.log("TOP");
-                }
 
             }
         }
 
+        class Ball {
+
+            constructor(x, y, radius) {
+
+                this.x = x;
+                this.y = y;
+
+                this.radius = radius;
+
+            }
+
+            drawBall() {
+
+                ctx.fillStyle = "rgb(129, 104, 170)";
+                ctx.beginPath();
+                // ctx.arc(x, y, radius, startAngle, endAngle, counterClockwise);
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI); // Circle centered at (250, 250) with radius 100
+                ctx.stroke();
+                ctx.fill();
+
+            }
+
+        }
+
+        var middleH = canvas.height * .5;
+        var middleW = canvas.width * .5;
+
+
         const myPaddle = new Paddle(20, 20, 50, 100);
         myPaddle.drawPaddle();
+
+        const myBall = new Ball(middleW, middleH, 50);
+        myBall.drawBall();
 
         // Add event listener for mouse movement
         canvas.addEventListener("mousemove", function (e) {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
+
             myPaddle.move(e); // Move the paddle based on mouse position
         });
 
