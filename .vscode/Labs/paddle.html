@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <!-- Canvas Created -->
+    <canvas id="canvas-one" width="500" height="450" style="border: 2px solid black"></canvas>
+
+    <script type="text/javascript">
+        // Variables for canvas and paint tool 'ctx'
+        var canvas = document.getElementById("canvas-one");
+        var ctx = canvas.getContext("2d");
+
+        // Paddle class created
+        class Paddle {
+            constructor(x, y, width, height, xdirection, ydirection, speed) {
+                this.x = x;
+                this.y = y;
+                this.width = width;
+                this.height = height;
+                this.speed = 30;
+            }
+
+            // Draw rectangle function
+            drawRec() {
+                ctx.beginPath();
+                ctx.strokeStyle = "red";
+                ctx.lineWidth = "6";
+                ctx.rect(this.x, this.y, this.width, this.height);
+                ctx.stroke();
+            }
+
+            // Move paddle function
+            movePaddle() {
+                // Use arrow function to preserve 'this' context
+                document.addEventListener('keydown', (e) => {
+                    console.log(e.which);
+                    switch (e.which) {
+                        // Left arrow key
+                        case 37:
+                            console.log('left arrow key pressed!');
+                            this.update(37); // Call update with key code
+                            break;
+
+                        // Right arrow key
+                        case 39:
+                            console.log('right arrow key pressed!');
+                            this.update(39); // Call update with key code
+                            break;
+
+                        // Up arrow key
+                        case 38:
+                            console.log('up arrow key pressed!');
+                            this.update(38); // Call update with key code
+                            break;
+
+                        // Down arrow key
+                        case 40:
+                            console.log('down arrow key pressed!');
+                            this.update(40); // Call update with key code
+                            break;
+                    }
+
+                    //check if paddle has hit border
+                    if (this.x <= 30) {
+                        this.x = 30;
+                    }
+                    if (this.x >= 320) {
+                        this.x = 320;
+                    }
+                    if (this.y <= 10) {
+                        this.y = 10;
+                    }
+                    if (this.y >= 320) {
+                        this.y = 320;
+                    }
+                });
+            }
+
+            // Update method
+            update(keyCode) {
+                if (keyCode === 37) {
+                    console.log("Left arrow key processed by update!");
+                    this.x -= this.speed; // Move paddle left
+                }
+                if (keyCode === 39) {
+                    console.log("Right arrow key processed by update!");
+                    this.x += this.speed; // Move paddle right
+                }
+                if (keyCode === 38) {
+                    console.log("Up arrow key processed by update!");
+                    this.y -= this.speed; // Move paddle up
+                }
+                if (keyCode === 40) {
+                    console.log("Down arrow key processed by update!");
+                    this.y += this.speed; // Move paddle down
+                }
+
+                // Clear the canvas and redraw the paddle in the new position
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                this.drawRec();
+            }
+        }
+
+        // Instance of paddle class created
+        const myPaddle = new Paddle(20, 20, 150, 100);
+
+        myPaddle.drawRec(); // Initial draw
+        myPaddle.movePaddle(); // Start listening for key presses
+    </script> <!-- End of script -->
+</body>
+
+</html>

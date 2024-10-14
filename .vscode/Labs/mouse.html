@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title> Canvas Main </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <style>
+   
+
+    canvas {
+      border: black solid 2px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <p>This is a paragraph</p>
+
+  <canvas id="canvasMain"></canvas>
+
+  <!-- JAVASCRIPT -->
+  <script type="text/javascript">
+
+    var canvas = document.getElementById("canvasMain");
+    const topPos = canvas.offsetTop;
+    const leftPos = canvas.offsetLeft;
+
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "rgb(129, 104, 170)";
+
+    canvas.addEventListener("mousemove", function (e) {
+
+      ctx.beginPath();
+      ctx.arc(event.clientX - leftPos, event.clientY - topPos, 6, 0, 2 * Math.PI);
+      ctx.fill();
+
+    });
+
+
+
+  </script>
+
+</body>
+
+</html>
