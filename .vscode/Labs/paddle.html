@@ -31,7 +31,7 @@
         // Paddle class
         class Paddle {
             constructor(x, y, width, height) {
-                this.x = x;
+                this.x = 50;
                 this.y = y;
                 this.width = width;
                 this.height = height;
@@ -48,14 +48,22 @@
             }
 
             move(e) {
+
                 // Update the paddle's position based on the mouse's X position
-                this.x = e.clientX - leftPos - this.width / 2; // Center the paddle on the cursor
+               // this.x = e.clientX - leftPos - this.width / 2; (commented out so paddle stays on y axis.)
+               
                 this.y = e.clientY - topPos - this.height / 2; // Center the paddle vertically
                 this.drawPaddle(); // Redraw paddle at new position
+
+                //check edge collision
+                if (this.x == topPos) {
+                    console.log("TOP");
+                }
+
             }
         }
 
-        const myPaddle = new Paddle(20, 20, 100, 60);
+        const myPaddle = new Paddle(20, 20, 50, 100);
         myPaddle.drawPaddle();
 
         // Add event listener for mouse movement
@@ -63,6 +71,8 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
             myPaddle.move(e); // Move the paddle based on mouse position
         });
+
+
 
     </script>
 
