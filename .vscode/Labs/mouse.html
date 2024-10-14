@@ -8,8 +8,7 @@
 
   <!-- CSS -->
   <style>
-   
-
+    /* Style for the canvas element: sets a 2px solid black border */
     canvas {
       border: black solid 2px;
     }
@@ -21,27 +20,39 @@
 
   <p>This is a paragraph</p>
 
+  <!-- The canvas element where drawing will occur -->
   <canvas id="canvasMain"></canvas>
 
   <!-- JAVASCRIPT -->
   <script type="text/javascript">
 
+    // Select the canvas element by its ID
     var canvas = document.getElementById("canvasMain");
+
+    // Get the position of the canvas relative to the top and left of the page
     const topPos = canvas.offsetTop;
     const leftPos = canvas.offsetLeft;
 
+    // Get the 2D drawing context of the canvas to allow drawing shapes and images
     var ctx = canvas.getContext("2d");
+
+    // Set the fill color for the shapes that will be drawn on the canvas
     ctx.fillStyle = "rgb(129, 104, 170)";
 
+    // Add an event listener for mouse movements on the canvas
     canvas.addEventListener("mousemove", function (e) {
-
+      // Begin a new path for drawing shapes
       ctx.beginPath();
-      ctx.arc(event.clientX - leftPos, event.clientY - topPos, 6, 0, 2 * Math.PI);
+      
+      /* Draw a circle (arc) at the mouse pointer's location
+         `e.clientX` and `e.clientY` represent the X and Y position of the mouse on the page.
+         Subtracting `leftPos` and `topPos` gives the position relative to the canvas.
+         The radius of the circle is 6, and the full circle is drawn using `2 * Math.PI`. */
+      ctx.arc(e.clientX - leftPos, e.clientY - topPos, 6, 0, 2 * Math.PI);
+      
+      // Fill the circle with the current fill style (purple in this case)
       ctx.fill();
-
     });
-
-
 
   </script>
 
