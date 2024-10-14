@@ -39,7 +39,7 @@
                 this.y = y;
                 this.width = width;
                 this.height = height;
-                this.SPEED = 10; // speed for moving paddle
+                
             }
 
             drawPaddle() {
@@ -65,12 +65,15 @@
 
         class Ball {
 
-            constructor(x, y, radius) {
+            constructor(x, y, radius, y_speed = 10) {
 
                 this.x = x;
                 this.y = y;
 
                 this.radius = radius;
+
+                this.y_speed = y_speed;
+
 
             }
 
@@ -85,6 +88,16 @@
 
             }
 
+            moveBall(){
+
+                this.y += this.y_speed;
+
+                if (this.y + this.radius >= canvas.height || this.y - this.radius <= 0) {
+                    this.y_speed = -this.y_speed;
+                }
+
+            }
+
         }
 
         var middleH = canvas.height * .5;
@@ -94,7 +107,7 @@
         const myPaddle = new Paddle(20, 20, 50, 100);
         myPaddle.drawPaddle();
 
-        const myBall = new Ball(middleW, middleH, 50);
+        const myBall = new Ball(middleW, middleH, 15);
         myBall.drawBall();
 
         // Add event listener for mouse movement
@@ -102,7 +115,19 @@
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
 
             myPaddle.move(e); // Move the paddle based on mouse position
+            myBall.drawBall();
         });
+
+        function repeatme() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            myPaddle.drawPaddle(); // Redraw the paddle
+            myBall.moveBall(); // Move the ball
+            myBall.drawBall(); // Redraw the ball
+            requestAnimationFrame(repeatme); // Keep animating
+        }
+
+         // Start the animation loop
+         repeatme();
 
 
 
