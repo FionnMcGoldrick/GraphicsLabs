@@ -21,14 +21,15 @@
         //paddle class created
         class Paddle {
 
-            constructor(x, y, width, height, xspeed, yspeed) { //constructor
+            constructor(x, y, width, height, xdirection, ydirection, speed) { //constructor
 
                 this.x = x;
                 this.y = y;
                 this.width = width;
                 this.height = height;
-                this.xspeed = xspeed;
-                this.yspeed = yspeed;
+                this.ydirection = 0;
+                this.xdirection = 0;
+                this.speed = 10;
 
             }
 
@@ -48,17 +49,19 @@
             //move paddle functions created
             movePaddle() {
 
-                $(document.body).on('keydown', function (e) {
+                document.addEventListener('keydown', function (e) {
                     console.log(e.which);
                     switch (e.which) {
                         // key code for left arrow
                         case 37:
                             console.log('left arrow key pressed!');
+                            this.xdirection - 1;
                             break;
 
                         // key code for right arrow
                         case 39:
                             console.log('right arrow key pressed!');
+                            
                             break;
 
                         //key code for up arrow key
@@ -71,6 +74,9 @@
                             break;
 
                     }
+
+                    //update method
+                   
                 });
 
             }
@@ -79,9 +85,10 @@
 
 
         //instance of paddle class created
-        const myPaddle = new Paddle(20, 20, 150, 100, 0, 0);
+        const myPaddle = new Paddle(20, 20, 150, 100);
 
         myPaddle.drawRec(); //calling draw method
+        myPaddle.movePaddle(); //calling move paddle
 
 
     </script> <!-- End of script -->
