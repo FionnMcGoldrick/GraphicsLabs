@@ -44,10 +44,6 @@
       // Begin a new path for drawing shapes
       ctx.beginPath();
       
-      /* Draw a circle (arc) at the mouse pointer's location
-         `e.clientX` and `e.clientY` represent the X and Y position of the mouse on the page.
-         Subtracting `leftPos` and `topPos` gives the position relative to the canvas.
-         The radius of the circle is 6, and the full circle is drawn using `2 * Math.PI`. */
       ctx.arc(e.clientX - leftPos, e.clientY - topPos, 6, 0, 2 * Math.PI);
       
       // Fill the circle with the current fill style (purple in this case)
