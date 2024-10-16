@@ -35,7 +35,7 @@
         // Paddle class
         class Paddle {
             constructor(x, y, width, height) {
-                this.x = 20;
+                this.x = x;
                 this.y = y;
                 this.width = width;
                 this.height = height;
@@ -57,7 +57,6 @@
                 // this.x = e.clientX - leftPos - this.width / 2; (commented out so paddle stays on y axis.)
 
                 this.y = e.clientY - topPos - this.height / 2; // Center the paddle vertically
-                this.drawPaddle(); // Redraw paddle at new position
 
 
             }
@@ -65,7 +64,7 @@
 
         class Ball {
 
-            constructor(x, y, radius, y_speed = 10) {
+            constructor(x, y, radius, y_speed = 10, x_speed = 10) {
 
                 this.x = x;
                 this.y = y;
@@ -73,6 +72,7 @@
                 this.radius = radius;
 
                 this.y_speed = y_speed;
+                this.x_speed = x_speed;
 
 
             }
@@ -91,10 +91,17 @@
             moveBall(){
 
                 this.y += this.y_speed;
+                this.x += this.x_speed;
 
                 if (this.y + this.radius >= canvas.height || this.y - this.radius <= 0) {
                     this.y_speed = -this.y_speed;
                 }
+
+                if (this.x + this.radius >= canvas.width || this.x - this.radius <= 0) {
+                    this.x_speed = -this.x_speed;
+
+                }
+                
 
             }
 
@@ -102,10 +109,12 @@
 
         var middleH = canvas.height * .5;
         var middleW = canvas.width * .5;
+        const PADDLE_WIDTH = 50;
+        const PADDLE_HEIGHT = 100;
 
 
-        const myPaddle = new Paddle(20, 20, 50, 100);
-        myPaddle.drawPaddle();
+        const paddle1 = new Paddle(20, 20, PADDLE_WIDTH, PADDLE_HEIGHT);
+        const paddle2 = new Paddle(canvas.width - 20 - PADDLE_WIDTH, 20, PADDLE_WIDTH, PADDLE_HEIGHT);
 
         const myBall = new Ball(middleW, middleH, 15);
         myBall.drawBall();
@@ -114,17 +123,32 @@
         canvas.addEventListener("mousemove", function (e) {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
 
-            myPaddle.move(e); // Move the paddle based on mouse position
+            paddle1.move(e); // Move the paddle based on mouse position
+            paddle2.move(e);
             myBall.drawBall();
         });
 
         function repeatme() {
             ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-            myPaddle.drawPaddle(); // Redraw the paddle
+            checkCollisions();
+            paddle1.drawPaddle(); // Redraw the paddle
+            paddle2.drawPaddle(); // Redraw the paddle
             myBall.moveBall(); // Move the ball
             myBall.drawBall(); // Redraw the ball
             requestAnimationFrame(repeatme); // Keep animating
         }
+
+        var checkCollisions = function() {
+            if (paddle1.x + paddle1.width > myBall.x - myBall.radius 
+                && myBall.y > paddle1.y && myBall.y < paddle1.y + paddle1.height) {
+                    myBall.x_speed = Math.abs(myBall.x_speed);
+                }
+            
+            if (paddle2.x < myBall.x + myBall.radius 
+                && myBall.y > paddle2.y && myBall.y < paddle2.y + paddle2.height) {
+                myBall.x_speed = - Math.abs(myBall.x_speed);
+            }
+        };
 
          // Start the animation loop
          repeatme();
