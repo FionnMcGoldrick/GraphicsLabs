@@ -9,11 +9,11 @@
     <!-- CSS -->
     <style type="text/css">
         canvas {
-            border: black solid 5px;
+            border: black solid 5px; /* Add a black border to the canvas */
         }
 
         body {
-            background-color: lightcyan;
+            background-color: lightcyan; /* Set a light background color for the page */
         }
     </style>
 
@@ -21,139 +21,132 @@
 
 <body>
 
-    <canvas id="mainCanvas" width="800" height="600"></canvas>
+    <canvas id="mainCanvas" width="800" height="600"></canvas> <!-- Main canvas where the paddle and ball will be drawn -->
 
     <!-- JAVASCRIPT -->
     <script type="text/javascript">
 
-        var canvas = document.getElementById("mainCanvas");
-        var ctx = canvas.getContext("2d");
+        var canvas = document.getElementById("mainCanvas"); // Get the canvas element
+        var ctx = canvas.getContext("2d"); // Get the 2D drawing context
 
-        var topPos = canvas.offsetTop;
-        var leftPos = canvas.offsetLeft;
+        var topPos = canvas.offsetTop; // Get the top position of the canvas on the page
+        var leftPos = canvas.offsetLeft; // Get the left position of the canvas on the page
 
         // Paddle class
         class Paddle {
             constructor(x, y, width, height) {
-                this.x = x;
-                this.y = y;
-                this.width = width;
-                this.height = height;
-                
+                this.x = x; // x position of the paddle
+                this.y = y; // y position of the paddle
+                this.width = width; // Width of the paddle
+                this.height = height; // Height of the paddle
             }
 
+            // Draw the paddle on the canvas
             drawPaddle() {
-                ctx.fillStyle = "rgb(129, 104, 170)";
-                ctx.strokeStyle = "black"; // Set stroke style
-                ctx.beginPath();
-                ctx.rect(this.x, this.y, this.width, this.height);
-                ctx.stroke(); // Now stroke will work
-                ctx.fill();
+                ctx.fillStyle = "rgb(129, 104, 170)"; // Fill color of the paddle
+                ctx.strokeStyle = "black"; // Border color of the paddle
+                ctx.beginPath(); // Start drawing
+                ctx.rect(this.x, this.y, this.width, this.height); // Draw a rectangle (paddle)
+                ctx.stroke(); // Draw the border
+                ctx.fill(); // Fill the paddle with color
             }
 
+            // Move the paddle based on the mouse's vertical position
             move(e) {
-
-                // Update the paddle's position based on the mouse's X position
-                // this.x = e.clientX - leftPos - this.width / 2; (commented out so paddle stays on y axis.)
-
-                this.y = e.clientY - topPos - this.height / 2; // Center the paddle vertically
-
-
+                this.y = e.clientY - topPos - this.height / 2; // Update the paddle's vertical position, keeping the paddle centered around the mouse position
             }
         }
 
+        // Ball class
         class Ball {
-
             constructor(x, y, radius, y_speed = 10, x_speed = 10) {
-
-                this.x = x;
-                this.y = y;
-
-                this.radius = radius;
-
-                this.y_speed = y_speed;
-                this.x_speed = x_speed;
-
-
+                this.x = x; // x position of the ball (horizontal)
+                this.y = y; // y position of the ball (vertical)
+                this.radius = radius; // Radius of the ball
+                this.y_speed = y_speed; // Vertical speed of the ball
+                this.x_speed = x_speed; // Horizontal speed of the ball
             }
 
+            // Draw the ball on the canvas
             drawBall() {
-
-                ctx.fillStyle = "rgb(129, 104, 170)";
-                ctx.beginPath();
-                // ctx.arc(x, y, radius, startAngle, endAngle, counterClockwise);
-                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI); // Circle centered at (250, 250) with radius 100
-                ctx.stroke();
-                ctx.fill();
-
+                ctx.fillStyle = "rgb(129, 104, 170)"; // Fill color of the ball
+                ctx.beginPath(); // Start drawing the ball
+                ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI); // Draw the ball as a circle
+                ctx.stroke(); // Draw the border of the ball
+                ctx.fill(); // Fill the ball with color
             }
 
-            moveBall(){
+            // Move the ball and bounce it off the edges of the canvas
+            moveBall() {
+                this.y += this.y_speed; // Update the vertical position of the ball
+                this.x += this.x_speed; // Update the horizontal position of the ball
 
-                this.y += this.y_speed;
-                this.x += this.x_speed;
-
+                // If the ball hits the top or bottom of the canvas, reverse the vertical speed
                 if (this.y + this.radius >= canvas.height || this.y - this.radius <= 0) {
                     this.y_speed = -this.y_speed;
                 }
 
+                // If the ball hits the left or right of the canvas, reverse the horizontal speed
                 if (this.x + this.radius >= canvas.width || this.x - this.radius <= 0) {
                     this.x_speed = -this.x_speed;
-
                 }
-                
-
             }
-
         }
 
-        var middleH = canvas.height * .5;
-        var middleW = canvas.width * .5;
+        // Middle position of the canvas
+        var middleH = canvas.height * 0.5;
+        var middleW = canvas.width * 0.5;
+
+        // Constants for paddle dimensions
         const PADDLE_WIDTH = 50;
         const PADDLE_HEIGHT = 100;
 
+        // Create two paddle objects (one on the left, one on the right)
+        const paddle1 = new Paddle(20, 20, PADDLE_WIDTH, PADDLE_HEIGHT); // Left paddle
+        const paddle2 = new Paddle(canvas.width - 20 - PADDLE_WIDTH, 20, PADDLE_WIDTH, PADDLE_HEIGHT); // Right paddle
 
-        const paddle1 = new Paddle(20, 20, PADDLE_WIDTH, PADDLE_HEIGHT);
-        const paddle2 = new Paddle(canvas.width - 20 - PADDLE_WIDTH, 20, PADDLE_WIDTH, PADDLE_HEIGHT);
+        // Create the ball object
+        const myBall = new Ball(middleW, middleH, 15); // Ball starts in the center of the canvas
+        myBall.drawBall(); // Initial drawing of the ball
 
-        const myBall = new Ball(middleW, middleH, 15);
-        myBall.drawBall();
-
-        // Add event listener for mouse movement
+        // Add event listener to move the paddles when the mouse moves
         canvas.addEventListener("mousemove", function (e) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the entire canvas before redrawing
 
-            paddle1.move(e); // Move the paddle based on mouse position
-            paddle2.move(e);
-            myBall.drawBall();
+            paddle1.move(e); // Move the left paddle based on the mouse position
+            paddle2.move(e); // Move the right paddle (optional to synchronize with paddle1)
+            myBall.drawBall(); // Redraw the ball after moving paddles
         });
 
+        // Function to continuously update and redraw the ball and paddles
         function repeatme() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-            checkCollisions();
-            paddle1.drawPaddle(); // Redraw the paddle
-            paddle2.drawPaddle(); // Redraw the paddle
-            myBall.moveBall(); // Move the ball
-            myBall.drawBall(); // Redraw the ball
-            requestAnimationFrame(repeatme); // Keep animating
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before drawing new frames
+            checkCollisions(); // Check for collisions between the paddles and the ball
+            paddle1.drawPaddle(); // Redraw the left paddle
+            paddle2.drawPaddle(); // Redraw the right paddle
+            myBall.moveBall(); // Move the ball based on its current speed and direction
+            myBall.drawBall(); // Redraw the ball at the new position
+            requestAnimationFrame(repeatme); // Call this function again to create a smooth animation loop
         }
 
+        // Function to check for collisions between the ball and the paddles
         var checkCollisions = function() {
+
+            // Collision detection for the left paddle (paddle1)
             if (paddle1.x + paddle1.width > myBall.x - myBall.radius 
                 && myBall.y > paddle1.y && myBall.y < paddle1.y + paddle1.height) {
-                    myBall.x_speed = Math.abs(myBall.x_speed);
-                }
-            
+                    myBall.x_speed = Math.abs(myBall.x_speed); // If the ball hits the left paddle, reverse its x direction
+            }
+
+            // Collision detection for the right paddle (paddle2)
             if (paddle2.x < myBall.x + myBall.radius 
                 && myBall.y > paddle2.y && myBall.y < paddle2.y + paddle2.height) {
-                myBall.x_speed = - Math.abs(myBall.x_speed);
+                myBall.x_speed = -Math.abs(myBall.x_speed); // If the ball hits the right paddle, reverse its x direction
             }
         };
 
-         // Start the animation loop
-         repeatme();
-
-
+        // Start the animation loop
+        repeatme();
 
     </script>
 
