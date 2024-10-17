@@ -15,6 +15,16 @@
         body {
             background-color: lightcyan; /* Set a light background color for the page */
         }
+
+        #scoreContainer {
+            position: absolute; /* Allow absolute positioning of the score */
+            top: 5px; /* Distance from the top */
+            right: 570px; /* Distance from the right */
+            font-size: 24px; /* Make the score text larger */
+            font-family: Arial, sans-serif; /* Choose a nice font */
+            font-weight: bold; /* Bold text */
+            color: black; /* Text color */
+        }
     </style>
 
 </head>
@@ -22,6 +32,13 @@
 <body>
 
     <canvas id="mainCanvas" width="800" height="600"></canvas> <!-- Main canvas where the paddle and ball will be drawn -->
+
+    <div id="scoreContainer">
+        <p>SCORE: <span id="paddleScore">0</span></p>
+    </div>
+
+
+
 
     <!-- JAVASCRIPT -->
     <script type="text/javascript">
@@ -31,6 +48,8 @@
 
         var topPos = canvas.offsetTop; // Get the top position of the canvas on the page
         var leftPos = canvas.offsetLeft; // Get the left position of the canvas on the page
+
+        var paddle_score = 0;
 
         // Paddle class
         class Paddle {
@@ -132,18 +151,36 @@
         // Function to check for collisions between the ball and the paddles
         var checkCollisions = function() {
 
+
+
             // Collision detection for the left paddle (paddle1)
             if (paddle1.x + paddle1.width > myBall.x - myBall.radius 
                 && myBall.y > paddle1.y && myBall.y < paddle1.y + paddle1.height) {
                     myBall.x_speed = Math.abs(myBall.x_speed); // If the ball hits the left paddle, reverse its x direction
+
+                    updateScore();
             }
 
             // Collision detection for the right paddle (paddle2)
             if (paddle2.x < myBall.x + myBall.radius 
                 && myBall.y > paddle2.y && myBall.y < paddle2.y + paddle2.height) {
                 myBall.x_speed = -Math.abs(myBall.x_speed); // If the ball hits the right paddle, reverse its x direction
+
+                updateScore();
             }
+
         };
+
+        function updateScore(){
+
+            paddle_score++;
+
+            const scoreElement = document.getElementById("paddleScore");
+
+            scoreElement.textContent = paddle_score;
+
+
+        }
 
         // Start the animation loop
         repeatme();
