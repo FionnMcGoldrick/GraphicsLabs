@@ -14,6 +14,7 @@
 
 <body>
 
+    <h1>Fionn McGoldrick</h1>
     <canvas id="mainCanvas" width="1000" height="600"></canvas>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -24,6 +25,7 @@
 
         // Scene
         const scene = new THREE.Scene(); // Correct capitalization
+        scene.background = new THREE.Color("rgb(105,105,105)"); // Gray background
 
         // Camera
         const camera = new THREE.PerspectiveCamera(80, canvas.width / canvas.height, 0.1, 1000); // Fixed aspect ratio
@@ -41,10 +43,10 @@
 
         //Spotlight
         var spotLight = new THREE.SpotLight(0xffffff);
-        spotLight.position.set(0, 2, 0); // Center spotlight directly above the sphere
+        spotLight.position.set(0, 2, 2); // Center spotlight directly above the sphere
         spotLight.angle = Math.PI / 4; // Adjust the angle of the spotlight
-        //spotLight.penumbra = 0.2; // Soft edge
-        //spotLight.decay = 2; // How fast the light diminishes
+        spotLight.penumbra = 0.2; // Soft edge
+        spotLight.decay = 2; // How fast the light diminishes
         spotLight.distance = 10; // How far the light reaches
         scene.add(spotLight);
 
