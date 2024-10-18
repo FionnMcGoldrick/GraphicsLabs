@@ -1,35 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Three.js Project</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
+    <style type="text/css">
+        canvas {
+            border: 2px black solid;
+        }
+    </style>
+</head>
 
-        //Scene
-        const scene = new THREE.scene; //set up camera
+<body>
 
-        //Camera
-        const camera = new THREE.PerspectiveCamera(75, window/innerWidth / window.innerHeight, 0.1, 1000);
+    <canvas id="mainCanvas" width="1000" height="600"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // Canvas
+        var canvas = document.getElementById("mainCanvas");
+
+        // Scene
+        const scene = new THREE.Scene(); // Correct capitalization
+
+        // Camera
+        const camera = new THREE.PerspectiveCamera(80, canvas.width / canvas.height, 0.1, 1000); // Fixed aspect ratio
         camera.position.z = 5;
 
-        //Renderer
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        // Renderer
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas }); // Attach canvas to renderer
+        renderer.setSize(canvas.width, canvas.height); // Correct size settings
 
-        //Sphere
-        const geometry = new THREE.SphereGeometry(15,32,16);
-        const material = new THREE.MeshBasicMaterial({color: 0xffff00});
-
-        const sphere = new THREE.Mesh(geometry, material); 
+        // Sphere
+        const geometry = new THREE.SphereGeometry(1, 32, 16); // Adjusted radius for visibility
+        const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            sphere.rotation.x += 0.01;
+            sphere.rotation.y += 0.01;
+            renderer.render(scene, camera);
+        }
 
-
-
+        animate(); // Call animation function
     </script>
-</head>
-<body>
-   
 </body>
+
 </html>
