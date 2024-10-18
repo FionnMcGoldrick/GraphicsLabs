@@ -27,7 +27,7 @@
 
         // Camera
         const camera = new THREE.PerspectiveCamera(80, canvas.width / canvas.height, 0.1, 1000); // Fixed aspect ratio
-        camera.position.z = 5;
+        camera.position.z = 3;
 
         // Renderer
         const renderer = new THREE.WebGLRenderer({ canvas: canvas }); // Attach canvas to renderer
@@ -35,9 +35,19 @@
 
         // Sphere
         const geometry = new THREE.SphereGeometry(1, 32, 16); // Adjusted radius for visibility
-        const material = new THREE.MeshBasicMaterial({ color: "rgb(230,215,255)" , wireframe: true}); //enables wireframe
+        const material = new THREE.MeshLambertMaterial({ color: "rgb(230,215,255)", wireframe: false }); //enables wireframe
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
+
+        //Spotlight
+        var spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(0, 2, 0); // Center spotlight directly above the sphere
+        spotLight.angle = Math.PI / 4; // Adjust the angle of the spotlight
+        //spotLight.penumbra = 0.2; // Soft edge
+        //spotLight.decay = 2; // How fast the light diminishes
+        spotLight.distance = 10; // How far the light reaches
+        scene.add(spotLight);
+
 
         // Animation Loop
         function animate() {
@@ -47,7 +57,11 @@
             renderer.render(scene, camera);
         }
 
+        
+
         animate(); // Call animation function
+
+
     </script>
 </body>
 
