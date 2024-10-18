@@ -35,7 +35,7 @@
 
         // Sphere
         const geometry = new THREE.SphereGeometry(1, 32, 16); // Adjusted radius for visibility
-        const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const material = new THREE.MeshBasicMaterial({ color: "rgb(230,215,255)" , wireframe: true}); //enables wireframe
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
 
