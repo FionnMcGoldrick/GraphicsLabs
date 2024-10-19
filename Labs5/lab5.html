@@ -59,7 +59,9 @@
 
                 // Define movement properties for the sphere
                 this.xSpeed = 0.03; // Speed of the sphere's movement along the x-axis
-                this.direction = 1; // Direction of movement: 1 for right, -1 for left
+                this.ySpeed = 0.05; // Speed of the sphere's movement along the y-axis
+                this.x_direction = 1; // Direction of movement: 1 for right, -1 for left
+                this.y_direction = -1; // Direction of movement: 1 for right, -1 for left
                 this.rightBoundary = 7.8; // Right boundary for the sphere's movement
                 this.leftBoundary = -7.8; // Left boundary for the sphere's movement
             }
@@ -71,21 +73,27 @@
                 this.mesh.rotation.y += 0.01; // Rotate the sphere around the Y-axis
 
                 // Move the sphere along the X-axis based on speed and direction
-                this.mesh.position.x += this.xSpeed * this.direction;
+                this.mesh.position.x += this.xSpeed * this.x_direction;
+                this.mesh.position.y += this.ySpeed * this.y_direction
 
                 // Check for collisions with the defined boundaries
                 if (this.mesh.position.x >= this.rightBoundary || this.mesh.position.x <= this.leftBoundary) {
-                    this.direction *= -1; // Flip direction when hitting a boundary
+                    this.x_direction *= -1; // Flip direction when hitting a boundary
+                }
+
+                //if ball hits the plane
+                if(this.mesh.position.y <= planeTopPos){
+                    this.y_direction *= -1;
                 }
             }
         }
 
         // Create a new Sphere instance
-        const sphere = new Sphere(1, mainColor, new THREE.Vector3(0, 1.7, 0)); // Create a sphere positioned slightly above the ground plane
+        const sphere = new Sphere(1, mainColor, new THREE.Vector3(0, 5, 0)); // Create a sphere positioned slightly above the ground plane
 
         // Create a spotlight to illuminate the scene
         var spotLight = new THREE.SpotLight(0xffffff); // Create a white spotlight
-        spotLight.position.set(1, 10, 0); // Position the spotlight above the sphere
+        spotLight.position.set(0, 8, 0); // Position the spotlight above the sphere
         spotLight.angle = Math.PI / 4; // Set the angle of the spotlight's beam
         spotLight.penumbra = 0.3; // Soft edge of the light beam
         spotLight.decay = 1; // Rate at which the light intensity decreases with distance
@@ -98,13 +106,16 @@
         scene.add(spotLightHelper);
 
         // Create a plane to receive shadows
-        const planeGeometry = new THREE.PlaneGeometry(20, 40); // Create a plane geometry with specified width and height
+        const planeGeometry = new THREE.PlaneGeometry(15, 20); // Create a plane geometry with specified width and height
         const planeMaterial = new THREE.MeshStandardMaterial({ color: "rgb(255, 255, 255)", opacity: 1, transparent: false }); // Create a material for the plane that will receive shadows
         const plane = new THREE.Mesh(planeGeometry, planeMaterial); // Create a mesh using the plane geometry and material
         plane.rotation.x = -Math.PI / 2; // Rotate the plane to be horizontal
         plane.position.y = 0; // Position the plane at ground level
         plane.receiveShadow = true; // Enable the plane to receive shadows from the sphere
         scene.add(plane); // Add the plane to the scene
+
+        //Getting top of plane
+        const planeTopPos = plane.position.y + .7;
 
         // Animation Loop Function
         function animate() {
