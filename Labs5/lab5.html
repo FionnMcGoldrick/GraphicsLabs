@@ -44,6 +44,7 @@
         // Sphere Class Definition
         class Sphere {
             constructor(radius, color, position) {
+
                 // Create a sphere geometry and material
                 this.geometry = new THREE.SphereGeometry(radius, 32, 16); // Create the sphere geometry with specified radius and detail
                 this.material = new THREE.MeshLambertMaterial({ color: color, wireframe: false }); // Create a Lambert material for lighting effects
@@ -84,7 +85,7 @@
 
         // Create a spotlight to illuminate the scene
         var spotLight = new THREE.SpotLight(0xffffff); // Create a white spotlight
-        spotLight.position.set(0, 5, 5); // Position the spotlight above the sphere
+        spotLight.position.set(1, 10, 0); // Position the spotlight above the sphere
         spotLight.angle = Math.PI / 4; // Set the angle of the spotlight's beam
         spotLight.penumbra = 0.3; // Soft edge of the light beam
         spotLight.decay = 1; // Rate at which the light intensity decreases with distance
