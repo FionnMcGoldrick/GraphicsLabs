@@ -7,7 +7,8 @@
     <title>Your Three.js Project</title>
     <style type="text/css">
         canvas {
-            border: 2px black solid; /* Add a border around the canvas for visual separation */
+            border: 2px black solid;
+            /* Add a border around the canvas for visual separation */
         }
     </style>
 </head>
@@ -23,12 +24,16 @@
         var mainColor = "rgb(230,215,255)"; // Define a main color variable for the sphere
 
         // Create a new Three.js scene
-        const scene = new THREE.Scene(); 
+        const scene = new THREE.Scene();
         scene.background = new THREE.Color(mainColor); // Set the background color of the scene
 
         // Create and configure a camera
         var camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 2, 5); // Position the camera at (0, 2, 5) for a good view of the sphere
+
+        // Create the camera helper
+        const cameraHelper = new THREE.CameraHelper(camera); // Create a camera helper for the camera
+        scene.add(cameraHelper); // Add the camera helper to the scene
 
         // Create a WebGL renderer
         var renderer = new THREE.WebGLRenderer();
@@ -87,9 +92,13 @@
         spotLight.castShadow = true; // Enable the spotlight to cast shadows
         scene.add(spotLight); // Add the spotlight to the scene
 
+        //Spotlight Helper
+        const spotLightHelper = new THREE.SpotLightHelper(spotLight); 
+        scene.add(spotLightHelper);
+
         // Create a plane to receive shadows
-        const planeGeometry = new THREE.PlaneGeometry(10, 10); // Create a plane geometry with specified width and height
-        const planeMaterial = new THREE.ShadowMaterial({ opacity: 0.5 }); // Create a material for the plane that will receive shadows
+        const planeGeometry = new THREE.PlaneGeometry(20, 40); // Create a plane geometry with specified width and height
+        const planeMaterial = new THREE.MeshStandardMaterial({ color: "rgb(255, 255, 255)", opacity: 1, transparent: false }); // Create a material for the plane that will receive shadows
         const plane = new THREE.Mesh(planeGeometry, planeMaterial); // Create a mesh using the plane geometry and material
         plane.rotation.x = -Math.PI / 2; // Rotate the plane to be horizontal
         plane.position.y = 0; // Position the plane at ground level
