@@ -62,27 +62,25 @@
                 this.ySpeed = 0.05; // Speed of the sphere's movement along the y-axis
                 this.x_direction = 1; // Direction of movement: 1 for right, -1 for left
                 this.y_direction = -1; // Direction of movement: 1 for right, -1 for left
-                this.gravity = -0.01; //gravity -1 because it pulls down
+                this.gravity = -0.01; //gravity -0.01 because it pulls down
                 this.rightBoundary = 7.8; // Right boundary for the sphere's movement
                 this.leftBoundary = -7.8; // Left boundary for the sphere's movement
+                this.dampingFactor = 0.8;
             }
 
             // Method to update the sphere's position and rotation
             update() {
 
                 //Adding Gravity
-                this.ySpeed -= this.gravity;
+                this.ySpeed += this.gravity;
 
-
-               // Animate the rotation of the sphere
+                // Animate the rotation of the sphere
                 this.mesh.rotation.x += 0.01; // Rotate the sphere around the X-axis
                 this.mesh.rotation.y += 0.01; // Rotate the sphere around the Y-axis
 
                 // Move the sphere along the X-axis based on speed and direction
                 this.mesh.position.x += this.xSpeed * this.x_direction;
-                this.mesh.position.y += this.ySpeed * this.y_direction
-
-                
+                this.mesh.position.y += this.ySpeed;
 
                 // Check for collisions with the defined boundaries
                 if (this.mesh.position.x >= this.rightBoundary || this.mesh.position.x <= this.leftBoundary) {
@@ -91,8 +89,11 @@
 
                 //if ball hits the plane
                 if (this.mesh.position.y <= planeTopPos) {
-                    this.y_direction *= -1;
+                    this.mesh.position.y = planeTopPos;
+                    this.ySpeed *= -this.dampingFactor;
+                   //this.mesh.position.y = planeTopPos + 1; // Ensure the sphere doesn't go below the plane
                 }
+
             }
         }
 
@@ -123,7 +124,7 @@
         scene.add(plane); // Add the plane to the scene
 
         //Getting top of plane
-        const planeTopPos = plane.position.y + .7;
+        const planeTopPos = plane.position.y + .9;
 
         // Animation Loop Function
         function animate() {
