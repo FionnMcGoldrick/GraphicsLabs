@@ -58,21 +58,27 @@
                 scene.add(this.mesh);
 
                 // Define movement properties for the sphere
-                this.xSpeed = 0.03; // Speed of the sphere's movement along the x-axis
+                this.xSpeed = 0.05; // Speed of the sphere's movement along the x-axis
                 this.ySpeed = 0.05; // Speed of the sphere's movement along the y-axis
                 this.x_direction = 1; // Direction of movement: 1 for right, -1 for left
                 this.y_direction = -1; // Direction of movement: 1 for right, -1 for left
                 this.gravity = -0.01; //gravity -0.01 because it pulls down
                 this.rightBoundary = 7.8; // Right boundary for the sphere's movement
                 this.leftBoundary = -7.8; // Left boundary for the sphere's movement
-                this.dampingFactor = 0.8;
+                this.dampingFactor = 0.8; //damping factor for each bounce
+                this.XdampingFactor = 0.999;
             }
 
             // Method to update the sphere's position and rotation
             update() {
-
-                //Adding Gravity
+                // Adding Gravity
                 this.ySpeed += this.gravity;
+
+                // Stop x if ball gets too slow
+                if (this.xSpeed <= 0.01) {
+                    this.xSpeed = 0; // Set to zero directly
+                } else {                   this.xSpeed *= this.XdampingFactor; // Apply damping if still moving
+                }
 
                 // Animate the rotation of the sphere
                 this.mesh.rotation.x += 0.01; // Rotate the sphere around the X-axis
@@ -87,17 +93,14 @@
                     this.x_direction *= -1; // Flip direction when hitting a boundary
                 }
 
-                //if ball hits the plane
+                // If ball hits the plane
                 if (this.mesh.position.y <= planeTopPos) {
-                    this.mesh.position.y = planeTopPos;
-                    this.ySpeed *= -this.dampingFactor;
-                   //this.mesh.position.y = planeTopPos + 1; // Ensure the sphere doesn't go below the plane
+                    this.mesh.position.y = planeTopPos; // Ensure the sphere doesn't go below the plane
+                    this.ySpeed *= -this.dampingFactor; // Reverse and dampen ySpeed on plane collision
                 }
-
             }
-        }
 
-        // Create a new Sphere instance
+        }        // Create a new Sphere instance
         const sphere = new Sphere(1, mainColor, new THREE.Vector3(0, 5, 0)); // Create a sphere positioned slightly above the ground plane
 
         // Create a spotlight to illuminate the scene
