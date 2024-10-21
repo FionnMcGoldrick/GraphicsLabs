@@ -57,27 +57,30 @@
                 // Add the sphere mesh to the scene
                 scene.add(this.mesh);
 
-                // Define movement properties for the sphere
-                this.xSpeed = 0.05; // Speed of the sphere's movement along the x-axis
-                this.ySpeed = 0.05; // Speed of the sphere's movement along the y-axis
-                this.x_direction = 1; // Direction of movement: 1 for right, -1 for left
-                this.y_direction = -1; // Direction of movement: 1 for right, -1 for left
-                this.gravity = -0.01; //gravity -0.01 because it pulls down
-                this.rightBoundary = 7.8; // Right boundary for the sphere's movement
-                this.leftBoundary = -7.8; // Left boundary for the sphere's movement
-                this.dampingFactor = 0.8; //damping factor for each bounce
-                this.XdampingFactor = 0.999;
             }
+
+            // Define movement properties for the sphere
+            xSpeed = 0.05; // Speed of the sphere's movement along the x-axis
+            ySpeed = 0.05; // Speed of the sphere's movement along the y-axis
+            x_direction = 1; // Direction of movement: 1 for right, -1 for left
+            y_direction = -1; // Direction of movement: 1 for right, -1 for left
+            gravity = -0.01; //gravity -0.01 because it pulls down
+            rightBoundary = 7.2; // Right boundary for the sphere's movement
+            leftBoundary = -7.2; // Left boundary for the sphere's movement
+            dampingFactor = 0.8; //damping factor for each bounce
+            XdampingFactor = 0.999;
 
             // Method to update the sphere's position and rotation
             update() {
+
                 // Adding Gravity
                 this.ySpeed += this.gravity;
 
                 // Stop x if ball gets too slow
                 if (this.xSpeed <= 0.01) {
                     this.xSpeed = 0; // Set to zero directly
-                } else {                   this.xSpeed *= this.XdampingFactor; // Apply damping if still moving
+                } else {
+                    this.xSpeed *= this.XdampingFactor; // Apply damping if still moving
                 }
 
                 // Animate the rotation of the sphere
@@ -102,6 +105,7 @@
 
         }        // Create a new Sphere instance
         const sphere = new Sphere(1, mainColor, new THREE.Vector3(0, 5, 0)); // Create a sphere positioned slightly above the ground plane
+        const sphere2 = new Sphere(1, mainColor, new THREE.Vector3(3, 5, -2));
 
         // Create a spotlight to illuminate the scene
         var spotLight = new THREE.SpotLight(0xffffff); // Create a white spotlight
@@ -133,6 +137,7 @@
         function animate() {
             requestAnimationFrame(animate); // Request the next frame for animation
             sphere.update(); // Call the update method of the sphere to update its position and rotation
+            sphere2.update();
             renderer.render(scene, camera); // Render the scene from the perspective of the camera
         }
 
